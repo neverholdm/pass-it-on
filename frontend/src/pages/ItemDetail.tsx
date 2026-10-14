@@ -224,7 +224,11 @@ const ItemDetail = () => {
         </div>
       </div>
 
-      <div className={cn('grid gap-8', hasImages ? 'md:grid-cols-2' : 'grid-cols-1')}>
+      {/* `grid-cols-1` (minmax(0, 1fr)) on mobile rather than the implicit `auto`
+          track: an auto track grows to its content's min-content, so the weekly
+          calendar's 700px inner width would widen the page past the screen
+          instead of scrolling inside its own overflow container. */}
+      <div className={cn('grid grid-cols-1 gap-8', hasImages && 'md:grid-cols-2')}>
         {hasImages && <ItemImageCarousel images={images} itemName={name} />}
 
         {/* Item details */}
