@@ -5,7 +5,7 @@ description = "Treibhaus donaufeld sharing platform"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
-    "anthropic>=1.13.0",
+    "anthropic>=1.15.0",
     "argon2-cffi",
     "channels-redis",
     "channels[daphne]",
@@ -17,10 +17,10 @@ dependencies = [
     "django-cors-headers",
     "django-environ",
     "django-filter>=26.2",
-    "django-guardian>=3.5.0",
+    "django-guardian>=3.5.1",
     "django-imagekit>=6.1.1",
     "django-model-utils",
-    "django-money>=3.6.1",
+    "django-money>=3.6.2",
     "django-ratelimit>=4.1.0",
     "django-redis",
     "django-simple-history>=3.13.0",
@@ -30,7 +30,7 @@ dependencies = [
     "drf-orjson-renderer>=1.8.0",
     "drf-spectacular",
     "fido2",
-    "google-genai>=2.29.0",
+    "google-genai>=2.31.0",
     "gunicorn",
     "hiredis",
     "httpx>=0.28.1",
