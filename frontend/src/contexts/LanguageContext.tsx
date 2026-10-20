@@ -686,6 +686,12 @@ const translations = {
     'scanner.initializingCamera': 'Initializing camera...',
     'scanner.detected': 'Detected',
 
+    // QR-code scan (header)
+    'qrScan.title': 'Scan QR code',
+    'qrScan.description': "Point the camera at an item's QR code to rent or return it.",
+    'qrScan.unknownTitle': 'Unknown QR code',
+    'qrScan.unknownDescription': 'This QR code does not belong to a bubble item.',
+
     // Favorites
     'favorites.title': 'Favorites',
     'favorites.add': 'Add to favorites',
@@ -1477,6 +1483,13 @@ const translations = {
     'scanner.usingPolyfill': 'Verwendet barcode-detector Polyfill',
     'scanner.initializingCamera': 'Kamera wird initialisiert...',
     'scanner.detected': 'Erkannt',
+
+    // QR-Code-Scan (Kopfzeile)
+    'qrScan.title': 'QR-Code scannen',
+    'qrScan.description':
+      'Richte die Kamera auf den QR-Code eines Gegenstands, um ihn auszuleihen oder zurückzugeben.',
+    'qrScan.unknownTitle': 'Unbekannter QR-Code',
+    'qrScan.unknownDescription': 'Dieser QR-Code gehört zu keinem bubble-Gegenstand.',
 
     // Favorites
     'favorites.title': 'Favoriten',

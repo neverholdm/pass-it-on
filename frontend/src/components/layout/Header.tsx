@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useInstallPrompt } from '@/hooks/useInstallPrompt';
 import { useUnreadMessages } from '@/hooks/useMessages';
 import { useProfile } from '@/hooks/useProfile';
+import { QrScanButton } from '@/components/layout/QrScanButton';
 import { SearchBar } from '@/components/layout/SearchBar';
 
 import { BROWSE_PATH, FAVORITES_PATH } from '@/lib/routes';
@@ -225,6 +226,10 @@ export const Header = () => {
           <div className={searchWrapperClassName}>
             <SearchBar loggedIn />
           </div>
+
+          {/* QR scan for quick rentals — mobile only, where people stand in
+              front of the item; on desktop the actions row takes this spot. */}
+          <QrScanButton />
 
           {/* Actions — hidden below `md`, where MobileBottomNav covers the same
               destinations (Browse, Bookings, Add, Account). The breakpoint must

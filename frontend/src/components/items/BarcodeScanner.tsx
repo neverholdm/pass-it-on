@@ -1,8 +1,18 @@
-import { ActionIcon, Alert, Button, Group, Loader, Modal, Stack, Text } from '@mantine/core';
-import { BarcodeDetector, prepareZXingModule } from 'barcode-detector/ponyfill';
+import {
+  ActionIcon,
+  type ActionIconProps,
+  Alert,
+  Button,
+  Group,
+  Loader,
+  Modal,
+  Stack,
+  Text,
+} from '@mantine/core';
+import { BarcodeDetector, type BarcodeFormat, prepareZXingModule } from 'barcode-detector/ponyfill';
 
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Scan, X } from 'lucide-react';
+import { Scan, X, type LucideIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 // Log library versions for debugging (values injected at build time by Vite define)
@@ -24,13 +34,40 @@ prepareZXingModule({
     },
   },
 });
+// Book barcodes: ISBN-13 is encoded as EAN-13, plus the common 1D formats.
+const DEFAULT_FORMATS: BarcodeFormat[] = [
+  'ean_13',
+  'ean_8',
+  'upc_a',
+  'upc_e',
+  'code_128',
+  'code_39',
+  'code_93',
+];
+
 interface BarcodeScannerProps {
   onScan: (barcode: string) => void;
   title?: string; // optional override for dialog title
+  description?: string; // optional override for the dialog's instructions
   fullWidth?: boolean; // render as a full-width button with label text
+  // Formats to detect. Keep the array stable (module-level constant): the
+  // detector is created once on mount.
+  formats?: BarcodeFormat[];
+  icon?: LucideIcon; // trigger icon
+  iconSize?: number;
+  triggerProps?: Partial<ActionIconProps>; // extra props for the icon trigger
 }
 
-export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScan, title, fullWidth }) => {
+export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
+  onScan,
+  title,
+  description,
+  fullWidth,
+  formats = DEFAULT_FORMATS,
+  icon: Icon = Scan,
+  iconSize = 16,
+  triggerProps,
+}) => {
   const { t } = useLanguage();
   // Always use the ZXing polyfill — native BarcodeDetector is unreliable for ISBN/EAN
   const isNativeBarcodeDetector = false;
@@ -53,17 +90,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScan, title, f
       const nativeDescriptor = Object.getOwnPropertyDescriptor(globalThis, 'BarcodeDetector');
       try {
         (globalThis as any).BarcodeDetector = undefined;
-        detectorRef.current = new BarcodeDetector({
-          formats: [
-            'ean_13', // ISBN-13 is encoded as EAN-13
-            'ean_8',
-            'upc_a',
-            'upc_e',
-            'code_128',
-            'code_39',
-            'code_93',
-          ],
-        });
+        detectorRef.current = new BarcodeDetector({ formats });
         setIsInitialized(true);
       } catch (err) {
         setError('Failed to initialize barcode detector');
@@ -77,7 +104,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScan, title, f
       }
     };
     initDetector();
-  }, []);
+  }, [formats]);
 
   const startScanning = async () => {
     // Wait for detector to be initialized
@@ -295,7 +322,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScan, title, f
           onClick={() => handleOpenChange(true)}
           disabled={!isInitialized}
           fullWidth
-          leftSection={!isInitialized ? <Loader size={16} /> : <Scan size={16} />}
+          leftSection={!isInitialized ? <Loader size={16} /> : <Icon size={16} />}
         >
           {title ?? t('scanner.open')}
         </Button>
@@ -308,8 +335,9 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScan, title, f
           aria-label={title ?? t('scanner.open')}
           disabled={!isInitialized}
           loading={!isInitialized}
+          {...triggerProps}
         >
-          <Scan size={16} />
+          <Icon size={iconSize} />
         </ActionIcon>
       )}
 
@@ -322,7 +350,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onScan, title, f
         <Stack gap="md">
           <div>
             <Text size="sm" c="dimmed">
-              {t('scanner.description')}
+              {description ?? t('scanner.description')}
             </Text>
             <Text size="xs" c="dimmed" mt={8}>
               {isNativeBarcodeDetector ? t('scanner.usingNative') : t('scanner.usingPolyfill')}
