@@ -151,13 +151,18 @@ function serviceWorkerPlugin(): Plugin {
 
 function zxingWasmPlugin(): Plugin {
   const wasmSrc = path.join(zxingWasmDir, 'dist/reader/zxing_reader.wasm');
+  // Versioned name: the service worker caches /lib/wasm/ cache-first forever,
+  // so an unversioned name would keep serving a stale binary after an upgrade
+  // (a JS/binary version mismatch breaks every scan). Must match locateFile
+  // in BarcodeScanner.tsx.
+  const wasmFileName = `lib/wasm/zxing_reader-${zxingWasmVersion}.wasm`;
 
   return {
     name: 'zxing-wasm',
 
-    // Dev server: serve the WASM file at /lib/wasm/zxing_reader.wasm
+    // Dev server: serve the WASM file at /lib/wasm/zxing_reader-<version>.wasm
     configureServer(server) {
-      server.middlewares.use('/lib/wasm/zxing_reader.wasm', (_req, res) => {
+      server.middlewares.use(`/${wasmFileName}`, (_req, res) => {
         res.setHeader('Content-Type', 'application/wasm');
         res.end(readFileSync(wasmSrc));
       });
@@ -167,7 +172,7 @@ function zxingWasmPlugin(): Plugin {
     generateBundle() {
       this.emitFile({
         type: 'asset',
-        fileName: 'lib/wasm/zxing_reader.wasm',
+        fileName: wasmFileName,
         source: readFileSync(wasmSrc),
       });
     },

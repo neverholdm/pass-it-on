@@ -31,6 +31,7 @@ export const QrScanButton = () => {
     <BarcodeScanner
       onScan={handleScan}
       formats={QR_FORMATS}
+      preferNative
       icon={ScanQrCode}
       iconSize={20}
       title={t('qrScan.title')}
