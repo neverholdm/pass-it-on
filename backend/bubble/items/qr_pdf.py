@@ -23,11 +23,21 @@ DPI = 150
 PAGE_SIZE = (1240, 1754)
 MARGIN = 100
 QR_SIZE = 900
+# Pillow's built-in font lacks umlauts, so prefer DejaVu Sans (installed in
+# the backend image via fonts-dejavu-core).
+FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
 
 def quick_rent_url(item: Item) -> str:
     """Frontend URL a scan of the item's QR code opens."""
     return f"{settings.FRONTEND_URL.rstrip('/')}/item/{item.id}/quick-rent"
+
+
+def _font(size: int):
+    try:
+        return ImageFont.truetype(FONT_PATH, size)
+    except OSError:
+        return ImageFont.load_default(size=size)
 
 
 def _draw_centered(draw, y, text, font, fill="black") -> int:
@@ -55,10 +65,10 @@ def render_quick_rent_pdf(item: Item) -> bytes:
 
     page = Image.new("RGB", PAGE_SIZE, "white")
     draw = ImageDraw.Draw(page)
-    title_font = ImageFont.load_default(size=72)
-    name_font = ImageFont.load_default(size=56)
-    text_font = ImageFont.load_default(size=34)
-    small_font = ImageFont.load_default(size=24)
+    title_font = _font(72)
+    name_font = _font(56)
+    text_font = _font(34)
+    small_font = _font(24)
 
     y = MARGIN
     y = _draw_centered(draw, y, _("Scan to rent"), title_font)
