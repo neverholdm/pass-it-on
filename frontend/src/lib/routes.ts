@@ -12,3 +12,18 @@ export const ACCOUNT_PATH = '/account';
 
 /** The viewer's favorite items, reachable from the profile menu. */
 export const FAVORITES_PATH = '/favorites';
+
+const ITEM_PATH_PATTERN =
+  /^\/item\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}(\/quick-rent)?\/?$/i;
+
+/** In-app path of a scanned bubble item QR code (quick-rent sheet or plain
+ *  item link), or null when the code isn't one. The host is ignored so codes
+ *  printed with another bubble URL (e.g. before a domain change) still work. */
+export const itemPathFromScan = (raw: string): string | null => {
+  try {
+    const { pathname } = new URL(raw.trim());
+    return ITEM_PATH_PATTERN.test(pathname) ? pathname.replace(/\/$/, '') : null;
+  } catch {
+    return null;
+  }
+};
