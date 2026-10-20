@@ -1,7 +1,7 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import path from 'path';
 import { defineConfig, type Plugin } from 'vite';
 
@@ -12,9 +12,20 @@ const barcodeDetectorVersion = JSON.parse(
     'utf-8',
   ),
 ).version as string;
-const zxingWasmVersion = JSON.parse(
-  readFileSync(path.resolve(import.meta.dirname, 'node_modules/zxing-wasm/package.json'), 'utf-8'),
-).version as string;
+// The WASM binary must come from the zxing-wasm copy barcode-detector itself
+// imports: its JS glue and the binary have to be the same version, or decoding
+// fails at runtime ("Failed to allocate … bytes in WASM memory"). npm nests
+// that copy under barcode-detector whenever its pinned version differs from
+// our top-level zxing-wasm.
+const nestedZxingWasmDir = path.resolve(
+  import.meta.dirname,
+  'node_modules/barcode-detector/node_modules/zxing-wasm',
+);
+const zxingWasmDir = existsSync(nestedZxingWasmDir)
+  ? nestedZxingWasmDir
+  : path.resolve(import.meta.dirname, 'node_modules/zxing-wasm');
+const zxingWasmVersion = JSON.parse(readFileSync(path.join(zxingWasmDir, 'package.json'), 'utf-8'))
+  .version as string;
 
 // Emit a static /version.json carrying the build's git SHA + version so the E2E
 // release-gate pipeline can confirm the frontend rolled over to the commit under
@@ -139,10 +150,7 @@ function serviceWorkerPlugin(): Plugin {
 }
 
 function zxingWasmPlugin(): Plugin {
-  const wasmSrc = path.resolve(
-    import.meta.dirname,
-    'node_modules/zxing-wasm/dist/reader/zxing_reader.wasm',
-  );
+  const wasmSrc = path.join(zxingWasmDir, 'dist/reader/zxing_reader.wasm');
 
   return {
     name: 'zxing-wasm',
