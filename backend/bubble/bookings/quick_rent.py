@@ -23,6 +23,7 @@ from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from rest_framework.exceptions import ValidationError
 
 from bubble.bookings.models import Booking, BookingStatus, Message
 from bubble.items.models import Item, ItemStatus, SalesType
@@ -44,8 +45,11 @@ class QuickRentResult:
     choices = (RENTED, RETURNED, UNAVAILABLE)
 
 
-class QuickRentError(Exception):
-    """The quick rental could not be carried out."""
+class QuickRentError(ValidationError):
+    """The quick rental could not be carried out (rendered as HTTP 400)."""
+
+    def __init__(self, message):
+        super().__init__({"non_field_errors": [message]})
 
 
 @dataclass

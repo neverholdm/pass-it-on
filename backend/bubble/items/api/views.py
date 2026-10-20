@@ -41,7 +41,6 @@ from bubble.bookings.api.serializers import (
 )
 from bubble.bookings.models import Booking, BookingStatus
 from bubble.bookings.quick_rent import (
-    QuickRentError,
     supports_quick_rent,
     toggle_quick_rent,
 )
@@ -436,10 +435,7 @@ class PublicItemViewSet(viewsets.ReadOnlyModelViewSet, ItemBaseViewSet):
         Only self-service (auto-approved) rental items support this.
         """
         item = self.get_object()
-        try:
-            outcome = toggle_quick_rent(item, request.user)
-        except QuickRentError as exc:
-            raise ValidationError({"non_field_errors": [str(exc)]}) from exc
+        outcome = toggle_quick_rent(item, request.user)
         return Response(QuickRentSerializer(outcome).data)
 
 
