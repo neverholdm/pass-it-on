@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from bubble.bookings.models import Booking, BookingStatus, Message
-from bubble.bookings.quick_rent import QuickRentResult
+from bubble.bookings.quick_rent import QuickRentResult, is_open_ended_running
 from bubble.items.api.serializers import ItemMinimalSerializer
 from bubble.items.models import Item, SalesType
 from bubble.users.api.serializers import UserSerializer
@@ -169,6 +169,16 @@ class BookingSerializer(serializers.ModelSerializer):
             and self.instance.time_to <= timezone.now()
         ):
             msg = _("This booking has already ended and can no longer be cancelled.")
+            raise serializers.ValidationError(msg)
+
+        # A running rental without an end date did happen: it is ended by
+        # returning the item (the ``return`` action), not by cancelling it.
+        if (
+            self.instance
+            and value == BookingStatus.CANCELLED
+            and is_open_ended_running(self.instance)
+        ):
+            msg = _("A running rental is ended by returning the item.")
             raise serializers.ValidationError(msg)
 
         user = self.context["request"].user

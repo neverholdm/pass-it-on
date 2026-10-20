@@ -92,6 +92,32 @@ def _next_booking_at(item: Item, user: User, now: datetime) -> datetime | None:
     return upcoming.time_from if upcoming else None
 
 
+def is_open_ended_running(booking: Booking, now: datetime | None = None) -> bool:
+    """Whether the booking is an approved rental without an end date that has
+    already started, i.e. one that only ends when the item is returned."""
+    now = now or timezone.now()
+    return (
+        booking.status in ACTIVE_STATUSES
+        and booking.time_to is None
+        and booking.time_from is not None
+        and booking.time_from <= now
+    )
+
+
+def end_booking_now(booking: Booking, user: User, message: str) -> Booking:
+    """Return the item: end the running booking now and complete it.
+
+    The item is freed by the ``update_item_status`` signal. ``message`` is
+    recorded as a booking message from ``user`` (which also notifies the other
+    side).
+    """
+    booking.time_to = timezone.now()
+    booking.status = BookingStatus.COMPLETED
+    booking.save(update_fields=["time_to", "status", "updated_at"])
+    Message.objects.create(booking=booking, sender=user, message=message)
+    return booking
+
+
 def toggle_quick_rent(item: Item, user: User) -> QuickRentOutcome:
     """Rent the item to ``user``, or return it if ``user`` already has it."""
     if not supports_quick_rent(item):
@@ -108,12 +134,7 @@ def toggle_quick_rent(item: Item, user: User) -> QuickRentOutcome:
 
         own = active.filter(user=user).first()
         if own is not None:
-            own.time_to = now
-            own.status = BookingStatus.COMPLETED
-            own.save(update_fields=["time_to", "status", "updated_at"])
-            Message.objects.create(
-                booking=own, sender=user, message=_("Item returned via QR code.")
-            )
+            end_booking_now(own, user, _("Item returned via QR code."))
             return QuickRentOutcome(QuickRentResult.RETURNED, own)
 
         current = active.first()
