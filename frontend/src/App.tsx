@@ -28,6 +28,7 @@ import MyItems from './pages/MyItems';
 import NotFound from './pages/NotFound';
 import NotificationSettings from './pages/NotificationSettings';
 import PersonalSettings from './pages/PersonalSettings';
+import QuickRent from './pages/QuickRent';
 import { AppUpdatePrompt } from './components/layout/AppUpdatePrompt';
 import { Header } from './components/layout/Header';
 import { MobileBottomNav } from './components/layout/MobileBottomNav';
@@ -95,6 +96,14 @@ const ProtectedRoutes = () => {
         <Route path={BROWSE_PATH} element={<Browse />} />
         <Route path="/item/:itemUuid" element={<ItemDetail />} />
         <Route path="/item/:itemUuid/bookings" element={<ItemBookingHistory />} />
+        <Route
+          path="/item/:itemUuid/quick-rent"
+          element={
+            <AuthRequired>
+              <QuickRent />
+            </AuthRequired>
+          }
+        />
         <Route
           path={ACCOUNT_PATH}
           element={

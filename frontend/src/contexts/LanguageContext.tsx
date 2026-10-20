@@ -532,6 +532,27 @@ const translations = {
     // Item booking history
     'itemBookings.title': 'Booking history',
     'itemBookings.viewHistory': 'Booking history',
+
+    // QR-code quick rental
+    'quickRent.downloadPdf': 'QR code',
+    'quickRent.downloadPdfTooltip':
+      'Download a printable QR code. Scanning it rents the item right away, scanning it again returns it.',
+    'quickRent.pdfError': 'Could not create the QR code PDF.',
+    'quickRent.processing': 'Processing your scan…',
+    'quickRent.rentedTitle': 'You rented {{item}}',
+    'quickRent.rentedDescription':
+      'Rented since {{time}}. Scan the QR code again when you bring it back to return it.',
+    'quickRent.nextBooking':
+      'Please return it before {{time}} – it is booked by someone else then.',
+    'quickRent.returnedTitle': '{{item}} returned',
+    'quickRent.returnedDescription': 'Returned at {{time}}. Thank you!',
+    'quickRent.unavailableTitle': '{{item}} is currently rented out',
+    'quickRent.unavailableDescription': '{{renter}} has had it since {{time}}.',
+    'quickRent.someoneElse': 'Someone else',
+    'quickRent.errorTitle': 'Could not rent this item',
+    'quickRent.errorDescription': 'Something went wrong. Please try again.',
+    'quickRent.viewItem': 'View item',
+    'quickRent.viewBooking': 'View booking',
     'itemBookings.empty': 'This item has no past bookings yet.',
     'itemBookings.loadError': 'Could not load the booking history.',
     'itemBookings.period': 'Period',
@@ -1302,6 +1323,27 @@ const translations = {
     // Item booking history
     'itemBookings.title': 'Buchungsverlauf',
     'itemBookings.viewHistory': 'Buchungsverlauf',
+
+    // QR-Code-Schnellmiete
+    'quickRent.downloadPdf': 'QR-Code',
+    'quickRent.downloadPdfTooltip':
+      'Druckbaren QR-Code herunterladen. Scannen leiht den Gegenstand sofort aus, erneutes Scannen gibt ihn zurück.',
+    'quickRent.pdfError': 'Das QR-Code-PDF konnte nicht erstellt werden.',
+    'quickRent.processing': 'Scan wird verarbeitet…',
+    'quickRent.rentedTitle': 'Du hast {{item}} ausgeliehen',
+    'quickRent.rentedDescription':
+      'Ausgeliehen seit {{time}}. Scanne den QR-Code erneut, wenn du den Gegenstand zurückbringst.',
+    'quickRent.nextBooking':
+      'Bitte bis {{time}} zurückgeben – danach ist der Gegenstand von jemand anderem gebucht.',
+    'quickRent.returnedTitle': '{{item}} zurückgegeben',
+    'quickRent.returnedDescription': 'Zurückgegeben um {{time}}. Danke!',
+    'quickRent.unavailableTitle': '{{item}} ist gerade verliehen',
+    'quickRent.unavailableDescription': 'Ausgeliehen von {{renter}} seit {{time}}.',
+    'quickRent.someoneElse': 'Jemand anderes',
+    'quickRent.errorTitle': 'Ausleihen nicht möglich',
+    'quickRent.errorDescription': 'Etwas ist schiefgelaufen. Bitte versuche es erneut.',
+    'quickRent.viewItem': 'Gegenstand ansehen',
+    'quickRent.viewBooking': 'Buchung ansehen',
     'itemBookings.empty': 'Dieser Artikel hat noch keine vergangenen Buchungen.',
     'itemBookings.loadError': 'Buchungsverlauf konnte nicht geladen werden.',
     'itemBookings.period': 'Zeitraum',
