@@ -210,8 +210,8 @@ class QuickRentPdfTestCase(TestCase):
             return b"%PDF-fake"
 
         with mock.patch("bubble.items.api.views.render_quick_rent_pdf", fake_render):
-            self.client.get(url, HTTP_ACCEPT_LANGUAGE="de")
-            self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
+            self.client.get(url, headers={"accept-language": "de"})
+            self.client.get(url, headers={"accept-language": "en"})
 
         self.assertEqual(languages, ["de", "en"])
 
