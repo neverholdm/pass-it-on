@@ -3441,6 +3441,21 @@ export type BookingsPartialUpdateResponses = {
 
 export type BookingsPartialUpdateResponse = BookingsPartialUpdateResponses[keyof BookingsPartialUpdateResponses];
 
+export type BookingsReturnCreateData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/bookings/{id}/return/';
+};
+
+export type BookingsReturnCreateResponses = {
+    200: Booking;
+};
+
+export type BookingsReturnCreateResponse = BookingsReturnCreateResponses[keyof BookingsReturnCreateResponses];
+
 export type BookingsUpdateData = {
     body: BookingWritable;
     path: {

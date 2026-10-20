@@ -7,6 +7,7 @@ import {
   bookingsList,
   bookingsPartialUpdate,
   bookingsRetrieve,
+  bookingsReturnCreate,
   type BookingWritable,
   type PatchedBooking,
 } from '@/services/django';
@@ -141,7 +142,10 @@ export const useUpdateBooking = () => {
 };
 
 const useFulfillmentMutation = (
-  action: typeof bookingsConfirmReceivedCreate | typeof bookingsConfirmReturnedCreate,
+  action:
+    | typeof bookingsConfirmReceivedCreate
+    | typeof bookingsConfirmReturnedCreate
+    | typeof bookingsReturnCreate,
   successKey: string,
 ) => {
   const { toast } = useToast();
@@ -184,3 +188,7 @@ export const useConfirmReceived = () =>
 /** Owner confirms a rented item was returned, completing the rental. */
 export const useConfirmReturned = () =>
   useFulfillmentMutation(bookingsConfirmReturnedCreate, 'booking.successReturned');
+
+/** Booker or owner returns the item of a running open-ended rental, ending it now. */
+export const useReturnBooking = () =>
+  useFulfillmentMutation(bookingsReturnCreate, 'booking.successReturnedNow');
