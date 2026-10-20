@@ -19,6 +19,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { ItemNotFoundError, useItem } from '@/hooks/useItem';
 import { ItemNotFound } from '@/components/items/ItemNotFound';
 import { useDeleteItem } from '@/hooks/useMyItems';
+import { useDownloadQuickRentPdf } from '@/hooks/useQuickRent';
 import { useItemCollections } from '@/hooks/useCollections';
 import { convertLineBreaks } from '@/lib/convertLineBreaks';
 import { formatPrice, getRentalPeriodSuffixKey } from '@/lib/currency';
@@ -27,7 +28,7 @@ import { getCategoryIcon } from '@/lib/categoryIcons';
 import { ActionIcon, Badge, Button, Text, Tooltip } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { formatDistanceToNow } from 'date-fns';
-import { BookMarked, Calendar, Edit3, History, MapPin, Trash2, Zap } from 'lucide-react';
+import { BookMarked, Calendar, Edit3, History, MapPin, QrCode, Trash2, Zap } from 'lucide-react';
 import { createElement, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -38,6 +39,7 @@ const ItemDetail = () => {
   const { t } = useLanguage();
   const { data: item, isLoading, error } = useItem(itemUuid);
   const deleteItemMutation = useDeleteItem();
+  const downloadQuickRentPdf = useDownloadQuickRentPdf();
   const { data: itemCollections } = useItemCollections(user ? itemUuid : undefined);
 
   const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>();
@@ -185,6 +187,8 @@ const ItemDetail = () => {
       ? false
       : (isOwner && !!price && !isRental) || (!buyingAllowed && !!price && !isRental));
   const showBookingAction = !isOwner || isRental || isWanted;
+  // Scan-to-rent QR codes need auto-approval: nobody confirms a scan by hand.
+  const supportsQuickRent = isRental && !!item.rental_self_service;
 
   const formatPropertyValue = (value: unknown) => {
     if (value === null || value === undefined) return '—';
@@ -362,6 +366,23 @@ const ItemDetail = () => {
                   >
                     <Trash2 size={16} />
                   </ActionIcon>
+                  {supportsQuickRent && (
+                    <Tooltip label={t('quickRent.downloadPdfTooltip')} multiline w={240}>
+                      <Button
+                        variant="outline"
+                        leftSection={<QrCode size={16} />}
+                        loading={downloadQuickRentPdf.isPending}
+                        onClick={() =>
+                          downloadQuickRentPdf.mutate({
+                            itemId: item.id,
+                            fileName: `quick-rent-${item.slug || item.id}.pdf`,
+                          })
+                        }
+                      >
+                        {t('quickRent.downloadPdf')}
+                      </Button>
+                    </Tooltip>
+                  )}
                 </>
               )}
 

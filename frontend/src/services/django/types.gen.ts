@@ -2025,6 +2025,24 @@ export type PushSubscriptionStatus = {
 };
 
 /**
+ * Outcome of scanning an item's quick-rent QR code.
+ *
+ * ``renter_name`` is the person holding the item: the scanning user for
+ * ``rented``/``returned``, someone else for ``unavailable``.
+ */
+export type QuickRent = {
+    result: ResultEnum;
+    booking_id: string;
+    item_id: string;
+    item_name: string;
+    renter_id: string | null;
+    readonly renter_name: string | null;
+    time_from: string | null;
+    time_to: string | null;
+    next_booking_at: string | null;
+};
+
+/**
  * Read-only minimal representation of a federated RemoteActor.
  */
 export type RemoteActorMinimal = {
@@ -2039,6 +2057,13 @@ export type RemoteActorMinimal = {
  * * `w` - Wöchentlich
  */
 export type RentalPeriodEnum = 'h' | 'd' | 'w';
+
+/**
+ * * `rented` - rented
+ * * `returned` - returned
+ * * `unavailable` - unavailable
+ */
+export type ResultEnum = 'rented' | 'returned' | 'unavailable';
 
 /**
  * * `sell` - Sell
@@ -3276,6 +3301,23 @@ export type ProfileWritable = {
      * User has dismissed the home-screen prompt to install Bubble as a PWA. Once set, the prompt is not shown again.
      */
     pwa_install_dismissed?: boolean;
+};
+
+/**
+ * Outcome of scanning an item's quick-rent QR code.
+ *
+ * ``renter_name`` is the person holding the item: the scanning user for
+ * ``rented``/``returned``, someone else for ``unavailable``.
+ */
+export type QuickRentWritable = {
+    result: ResultEnum;
+    booking_id: string;
+    item_id: string;
+    item_name: string;
+    renter_id: string | null;
+    time_from: string | null;
+    time_to: string | null;
+    next_booking_at: string | null;
 };
 
 export type UserWritable = {
@@ -4649,6 +4691,24 @@ export type ItemsCoOwnersCreateResponses = {
 
 export type ItemsCoOwnersCreateResponse = ItemsCoOwnersCreateResponses[keyof ItemsCoOwnersCreateResponses];
 
+export type ItemsQuickRentPdfRetrieveData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/items/{id}/quick-rent-pdf/';
+};
+
+export type ItemsQuickRentPdfRetrieveResponses = {
+    /**
+     * Printable QR code sheet
+     */
+    200: Blob | File;
+};
+
+export type ItemsQuickRentPdfRetrieveResponse = ItemsQuickRentPdfRetrieveResponses[keyof ItemsQuickRentPdfRetrieveResponses];
+
 export type ItemsReorderImagesUpdateData = {
     body: ItemWritable;
     path: {
@@ -5212,6 +5272,21 @@ export type PublicItemsListResponses = {
 };
 
 export type PublicItemsListResponse = PublicItemsListResponses[keyof PublicItemsListResponses];
+
+export type PublicItemsQuickRentCreateData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/api/public-items/{id}/quick-rent/';
+};
+
+export type PublicItemsQuickRentCreateResponses = {
+    200: QuickRent;
+};
+
+export type PublicItemsQuickRentCreateResponse = PublicItemsQuickRentCreateResponses[keyof PublicItemsQuickRentCreateResponses];
 
 export type PublicItemsRetrieveData = {
     body?: never;
