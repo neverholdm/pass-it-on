@@ -432,7 +432,8 @@ class PublicItemViewSet(viewsets.ReadOnlyModelViewSet, ItemBaseViewSet):
 
         Called when a user scans the item's QR code. If someone else currently
         has the item, nothing changes and the response names who has it.
-        Only self-service (auto-approved) rental items support this.
+        Only self-service (auto-approved) rental items that allow open-ended
+        rentals support this.
         """
         item = self.get_object()
         outcome = toggle_quick_rent(item, request.user)
@@ -551,14 +552,17 @@ class ItemViewSet(viewsets.ModelViewSet, ItemBaseViewSet):
         """Download a printable PDF with the item's quick-rent QR code.
 
         Available to owners and co-owners of self-service (auto-approved)
-        rental items.
+        rental items that allow open-ended rentals. The sheet is written in the
+        request language, i.e. the UI language the frontend sends as
+        ``Accept-Language``.
         """
         item = self.get_object()
         if not supports_quick_rent(item):
             raise ValidationError(
                 _(
                     "QR code rental is only available for rental items with"
-                    " self-service (auto-approved) rental enabled."
+                    " self-service (auto-approved) and open-ended rentals"
+                    " enabled."
                 )
             )
         response = HttpResponse(

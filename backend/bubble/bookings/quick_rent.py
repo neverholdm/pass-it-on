@@ -10,8 +10,9 @@ item. Scanning it opens the item's quick-rent page, which calls
 - someone else has it → nothing changes and the current booking is returned so
   the user can see who has it (``UNAVAILABLE``).
 
-Only self-service (auto-approved) rentals qualify — there is no owner around
-to confirm a scan in front of the item.
+Only self-service (auto-approved) rentals that allow open-ended rentals
+qualify: there is no owner around to confirm a scan in front of the item, and
+the return date is only known once the item is scanned again.
 """
 
 from __future__ import annotations
@@ -63,7 +64,11 @@ class QuickRentOutcome:
 
 def supports_quick_rent(item: Item) -> bool:
     """Whether the item can be rented and returned by scanning its QR code."""
-    return item.rental_self_service and item.sales_type in QUICK_RENT_SALES_TYPES
+    return (
+        item.rental_self_service
+        and item.rental_open_end
+        and item.sales_type in QUICK_RENT_SALES_TYPES
+    )
 
 
 def _active_bookings(item: Item, now: datetime):

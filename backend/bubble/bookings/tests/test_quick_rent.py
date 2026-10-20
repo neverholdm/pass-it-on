@@ -3,10 +3,11 @@
 # mypy: ignore-errors
 
 from datetime import timedelta
+from unittest import mock
 
 from django.test import TestCase
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -17,13 +18,19 @@ from bubble.items.qr_pdf import quick_rent_url
 from bubble.users.tests.factories import UserFactory
 
 
+class QuickRentItemFactory(SelfServiceItemFactory):
+    """Self-service rental that allows open-ended rentals: QR-code ready."""
+
+    rental_open_end = True
+
+
 class QuickRentTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.owner = UserFactory(name="Owner")
         self.renter = UserFactory(name="Renter")
         self.other = UserFactory(name="Other")
-        self.item = SelfServiceItemFactory(
+        self.item = QuickRentItemFactory(
             user=self.owner, visibility=VisibilityType.AUTHENTICATED
         )
 
@@ -116,14 +123,23 @@ class QuickRentTestCase(TestCase):
         self.assertIsNotNone(response.data["next_booking_at"])
 
     def test_requires_self_service(self):
-        item = ItemFactory(user=self.owner, rental_self_service=False)
+        item = ItemFactory(
+            user=self.owner, rental_self_service=False, rental_open_end=True
+        )
+        response = self.scan(self.renter, item)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(Booking.objects.filter(item=item).exists())
+
+    def test_requires_open_end(self):
+        item = QuickRentItemFactory(user=self.owner, rental_open_end=False)
         response = self.scan(self.renter, item)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(Booking.objects.filter(item=item).exists())
 
     def test_requires_rental_item(self):
-        item = SelfServiceItemFactory(user=self.owner, sales_type=SalesType.SELL)
+        item = QuickRentItemFactory(user=self.owner, sales_type=SalesType.SELL)
         response = self.scan(self.renter, item)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -150,7 +166,7 @@ class QuickRentPdfTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.owner = UserFactory()
-        self.item = SelfServiceItemFactory(user=self.owner, name="Cargo bike")
+        self.item = QuickRentItemFactory(user=self.owner, name="Cargo bike")
 
     def get_pdf(self, user, item=None):
         self.client.force_authenticate(user=user)
@@ -171,10 +187,33 @@ class QuickRentPdfTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_pdf_requires_self_service(self):
-        item = ItemFactory(user=self.owner, rental_self_service=False)
+        item = ItemFactory(
+            user=self.owner, rental_self_service=False, rental_open_end=True
+        )
         response = self.get_pdf(self.owner, item)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_pdf_requires_open_end(self):
+        item = QuickRentItemFactory(user=self.owner, rental_open_end=False)
+        response = self.get_pdf(self.owner, item)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_pdf_uses_request_language(self):
+        self.client.force_authenticate(user=self.owner)
+        url = reverse("api:item-quick-rent-pdf", kwargs={"id": self.item.id})
+        languages = []
+
+        def fake_render(item):
+            languages.append(translation.get_language())
+            return b"%PDF-fake"
+
+        with mock.patch("bubble.items.api.views.render_quick_rent_pdf", fake_render):
+            self.client.get(url, HTTP_ACCEPT_LANGUAGE="de")
+            self.client.get(url, HTTP_ACCEPT_LANGUAGE="en")
+
+        self.assertEqual(languages, ["de", "en"])
 
     def test_quick_rent_url_points_to_frontend(self):
         self.assertTrue(

@@ -187,8 +187,9 @@ const ItemDetail = () => {
       ? false
       : (isOwner && !!price && !isRental) || (!buyingAllowed && !!price && !isRental));
   const showBookingAction = !isOwner || isRental || isWanted;
-  // Scan-to-rent QR codes need auto-approval: nobody confirms a scan by hand.
-  const supportsQuickRent = isRental && !!item.rental_self_service;
+  // Scan-to-rent QR codes need auto-approval (nobody confirms a scan by hand)
+  // and open-ended rentals (the return time is only known at the next scan).
+  const supportsQuickRent = isRental && !!item.rental_self_service && !!item.rental_open_end;
 
   const formatPropertyValue = (value: unknown) => {
     if (value === null || value === undefined) return '—';
