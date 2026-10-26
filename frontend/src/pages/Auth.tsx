@@ -47,6 +47,7 @@ const Auth = () => {
   const { t } = useLanguage();
   const { refreshAuth, sessionError, pendingFlows } = useAuth();
   const { requireLogin } = useAppConfig();
+  const localDemoAvailable = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
 
   // Guards the automatic forward against firing twice within one mount. The
   // cross-page guards live in lib/sso: this screen is remounted by the round
@@ -360,6 +361,11 @@ const Auth = () => {
                 </>
               )}
             </form>
+            {localDemoAvailable && (
+              <Button variant="subtle" fullWidth onClick={() => navigate('/demo/browse')}>
+                Open the local demo
+              </Button>
+            )}
           </div>
         </Card>
       </div>

@@ -36,6 +36,12 @@ import { OfflineIndicator } from './components/layout/OfflineIndicator';
 import { ACCOUNT_PATH, BROWSE_PATH, FAVORITES_PATH } from './lib/routes';
 import { localStorageColorSchemeManager, MantineProvider } from '@mantine/core';
 import { mantineTheme } from './theme/mantine';
+import { DemoLayout } from './components/demo/DemoLayout';
+import BrowsePage from './pages/BrowsePage';
+import GiveItemPage from './pages/GiveItemPage';
+import ItemDetailsPage from './pages/ItemDetailsPage';
+import MyActivityPage from './pages/MyActivityPage';
+import ImpactPage from './pages/ImpactPage';
 
 const queryClient = new QueryClient();
 
@@ -70,6 +76,7 @@ const AuthRequired = ({ children }: { children: React.ReactNode }) => {
 const ProtectedRoutes = () => {
   const { session, loading: authLoading } = useAuth();
   const { requireLogin, loading: configLoading } = useAppConfig();
+  const location = useLocation();
   useLanguageSync();
 
   // Wait for both the session check and the config fetch to resolve
@@ -82,7 +89,8 @@ const ProtectedRoutes = () => {
   }
 
   // REQUIRE_LOGIN=true (default): gate everything behind login
-  if (requireLogin && !session) {
+  const isDemoRoute = location.pathname.startsWith('/demo');
+  if (requireLogin && !session && !isDemoRoute) {
     return <Auth />;
   }
 
@@ -92,6 +100,14 @@ const ProtectedRoutes = () => {
     <div className={`min-h-screen bg-background ${session ? 'pb-16 md:pb-0' : ''}`}>
       <Header />
       <Routes>
+        <Route path="/demo" element={<DemoLayout />}>
+          <Route index element={<Navigate to="browse" replace />} />
+          <Route path="browse" element={<BrowsePage />} />
+          <Route path="give" element={<GiveItemPage />} />
+          <Route path="item/:itemUuid" element={<ItemDetailsPage />} />
+          <Route path="activity" element={<MyActivityPage />} />
+          <Route path="impact" element={<ImpactPage />} />
+        </Route>
         <Route path="/" element={<RootRoute />} />
         <Route path={BROWSE_PATH} element={<Browse />} />
         <Route path="/item/:itemUuid" element={<ItemDetail />} />

@@ -21,10 +21,14 @@ export const test = base.extend<{ api: ApiClient; testData: TestData }>({
     await context.dispose();
   },
 
-  testData: async ({}, use) => {
+  // Cleanup callbacks may use the authenticated demo browser session to restore
+  // only the demo-marked fixtures created by a scenario.
+  testData: async ({ page }, use) => {
     const data = new TestData();
     await use(data);
     await data.cleanup();
+    // Keep the browser page fixture alive through cleanup callbacks registered by specs.
+    void page;
   },
 });
 

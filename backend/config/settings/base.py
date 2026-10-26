@@ -52,6 +52,7 @@ APPRISE_MATRIX_HOSTNAME = env("APPRISE_MATRIX_HOSTNAME", default="").strip() or 
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool("DJANGO_DEBUG", False)
+PASS_IT_ON_DEMO_MODE = env.bool("PASS_IT_ON_DEMO_MODE", default=False)
 # Build info baked into the image at build time (see backend/Dockerfile).
 # Exposed via GET /api/version/ and consumed by the E2E release-gate pipeline
 # (docs/e2e-testing/plan.md §7.2).
@@ -145,6 +146,7 @@ LOCAL_APPS = [
     "bubble.notifications.apps.NotificationsConfig",
     "bubble.federation.apps.FederationConfig",
     "bubble.caldav.apps.CaldavConfig",
+    "bubble.demo.apps.DemoConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

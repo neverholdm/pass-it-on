@@ -1,6 +1,8 @@
-# bubble
+# Pass It On
 
-Sharing and booking platform for communities
+A local-only demo for free item sharing in communities.
+
+[English](README.md) | [简体中文](README.zh-CN.md)
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
@@ -11,7 +13,15 @@ Run
 
 - `docker compose up -d` (wait a while)
 - `docker compose exec backend python manage.py createsuperuser`
-- open http://localhost:8080 and log in
+- open http://127.0.0.1:18080 and log in
+
+## Pass It On local demo
+
+This checkout adapts Sharebubble into a local-only free-giveaway demo. Start the stack with `docker compose up -d --build`, then initialize the fictional sample accounts and records with `docker compose exec backend uv run python manage.py reset_demo`. Open <http://127.0.0.1:18080/demo/browse> and follow [the demo guide](docs/DEMO_GUIDE.md).
+
+The two demo accounts, sample items, conversations, and impact figures are fictional. The reset command replaces only records explicitly marked as Pass It On demo data. It does not reset the database. The frontend host port is bound to IPv4 loopback; the backend API is not published as a host port.
+
+Pass It On changes are layered on Sharebubble [`bubble`](https://github.com/sharebubble/bubble/tree/362a83fc9edb25fccdeddd5716629a3e6f2e1d05), commit `362a83fc9edb25fccdeddd5716629a3e6f2e1d05`, under the repository's GNU AGPL v3 license. The existing `LICENSE` is retained. The local demo does not provide a deployed public service.
 
 # Notifications
 

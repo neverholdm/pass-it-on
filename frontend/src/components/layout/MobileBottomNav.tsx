@@ -30,7 +30,7 @@ export const MobileBottomNav = () => {
   const { data: unreadMessages } = useUnreadMessages();
 
   // The bar's destinations are user-specific; hide it for anonymous visitors.
-  if (!user) return null;
+  if (!user || location.pathname.startsWith('/demo')) return null;
 
   const unreadCount = unreadMessages?.count || 0;
 

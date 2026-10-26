@@ -2,11 +2,14 @@
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, viewsets
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from bubble.comments.api.permissions import IsAuthorOrReadOnly
 from bubble.comments.api.serializers import CommentSerializer
 from bubble.comments.models import Comment
+from bubble.demo.constants import DEMO_MARKER
+from bubble.demo.validators import contains_contact_details
 from bubble.items.models import Item
 
 
@@ -38,4 +41,14 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         """Attach the authenticated user as the comment author."""
+        item = serializer.validated_data["item"]
+        body = serializer.validated_data["body"]
+        if (
+            item.properties
+            and item.properties.get(DEMO_MARKER)
+            and contains_contact_details(body)
+        ):
+            raise ValidationError(
+                {"body": "Please keep contact details out of public messages."}
+            )
         serializer.save(user=self.request.user)

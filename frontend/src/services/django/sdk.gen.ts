@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { AuthTokenCreateData, AuthTokenCreateResponses, BookingsConfirmReceivedCreateData, BookingsConfirmReceivedCreateResponses, BookingsConfirmReturnedCreateData, BookingsConfirmReturnedCreateResponses, BookingsCreateData, BookingsCreateResponses, BookingsDestroyData, BookingsDestroyResponses, BookingsListData, BookingsListResponses, BookingsPartialUpdateData, BookingsPartialUpdateResponses, BookingsRetrieveData, BookingsRetrieveResponses, BookingsReturnCreateData, BookingsReturnCreateResponses, BookingsUpdateData, BookingsUpdateResponses, BooksCreateData, BooksCreateResponses, BooksDestroyData, BooksDestroyResponses, BooksIsbnUpdateUpdateData, BooksIsbnUpdateUpdateResponses, BooksListData, BooksListResponses, BooksPartialUpdateData, BooksPartialUpdateResponses, BooksRetrieveData, BooksRetrieveResponses, BooksUpdateData, BooksUpdateResponses, CollectionItemsCreateData, CollectionItemsCreateResponses, CollectionItemsDestroyData, CollectionItemsDestroyResponses, CollectionItemsListData, CollectionItemsListResponses, CollectionItemsPartialUpdateData, CollectionItemsPartialUpdateResponses, CollectionItemsRetrieveData, CollectionItemsRetrieveResponses, CollectionItemsUpdateData, CollectionItemsUpdateResponses, CollectionsAddItemCreateData, CollectionsAddItemCreateResponses, CollectionsBulkAddItemsCreateData, CollectionsBulkAddItemsCreateResponses, CollectionsBulkRemoveItemsCreateData, CollectionsBulkRemoveItemsCreateResponses, CollectionsCalendarLinkCreateData, CollectionsCalendarLinkCreateResponses, CollectionsCalendarLinkDestroyData, CollectionsCalendarLinkDestroyResponses, CollectionsCalendarLinkRetrieveData, CollectionsCalendarLinkRetrieveResponses, CollectionsCreateData, CollectionsCreateResponses, CollectionsDestroyData, CollectionsDestroyResponses, CollectionsForItemListData, CollectionsForItemListResponses, CollectionsHistoryListData, CollectionsHistoryListResponses, CollectionsListData, CollectionsListResponses, CollectionsManagePermissionsCreateData, CollectionsManagePermissionsCreateResponses, CollectionsMyCollectionsListData, CollectionsMyCollectionsListResponses, CollectionsPartialUpdateData, CollectionsPartialUpdateResponses, CollectionsPermissionsListData, CollectionsPermissionsListResponses, CollectionsRemoveItemCreateData, CollectionsRemoveItemCreateResponses, CollectionsRetrieveData, CollectionsRetrieveResponses, CollectionsUpdateData, CollectionsUpdateResponses, CommentsCreateData, CommentsCreateResponses, CommentsDestroyData, CommentsDestroyResponses, CommentsListData, CommentsListResponses, CommentsPartialUpdateData, CommentsPartialUpdateResponses, CommentsRetrieveData, CommentsRetrieveResponses, CommentsUpdateData, CommentsUpdateResponses, ConfigRetrieveData, ConfigRetrieveResponses, FavoritesCreateData, FavoritesCreateResponses, FavoritesDestroyData, FavoritesDestroyResponses, FavoritesItemIdsRetrieveData, FavoritesItemIdsRetrieveResponses, FavoritesListData, FavoritesListResponses, FederatedItemsRetrieveData, FederatedItemsRetrieveResponses, GroupsListData, GroupsListResponses, GroupsRetrieveData, GroupsRetrieveResponses, ImagesCreateData, ImagesCreateResponses, ImagesDestroyData, ImagesDestroyResponses, ImagesListData, ImagesListResponses, ImagesPartialUpdateData, ImagesPartialUpdateResponses, ImagesRetrieveData, ImagesRetrieveResponses, ImagesRotateUpdateData, ImagesRotateUpdateResponses, ImagesUpdateData, ImagesUpdateResponses, ItemsAiDescribeUpdateData, ItemsAiDescribeUpdateResponses, ItemsAiImageUpdateData, ItemsAiImageUpdateResponses, ItemsCalendarLinkCreateData, ItemsCalendarLinkCreateResponses, ItemsCalendarLinkDestroyData, ItemsCalendarLinkDestroyResponses, ItemsCalendarLinkRetrieveData, ItemsCalendarLinkRetrieveResponses, ItemsCoOwnersCreateData, ItemsCoOwnersCreateResponses, ItemsCoOwnersDestroyData, ItemsCoOwnersDestroyResponses, ItemsCoOwnersRetrieveData, ItemsCoOwnersRetrieveResponses, ItemsCreateData, ItemsCreateResponses, ItemsDestroyData, ItemsDestroyResponses, ItemsListData, ItemsListResponses, ItemsPartialUpdateData, ItemsPartialUpdateResponses, ItemsQuickRentPdfRetrieveData, ItemsQuickRentPdfRetrieveResponses, ItemsReorderImagesUpdateData, ItemsReorderImagesUpdateResponses, ItemsRetrieveData, ItemsRetrieveResponses, ItemsUpdateData, ItemsUpdateResponses, ItemsViewersCreateData, ItemsViewersCreateResponses, ItemsViewersDestroyData, ItemsViewersDestroyResponses, ItemsViewersRetrieveData, ItemsViewersRetrieveResponses, LocationsListData, LocationsListResponses, LocationsRetrieveData, LocationsRetrieveResponses, MessagesCreateData, MessagesCreateResponses, MessagesDestroyData, MessagesDestroyResponses, MessagesListData, MessagesListResponses, MessagesPartialUpdateData, MessagesPartialUpdateResponses, MessagesRetrieveData, MessagesRetrieveResponses, MessagesUpdateData, MessagesUpdateResponses, MyCalendarCreateData, MyCalendarCreateResponses, MyCalendarDestroyData, MyCalendarDestroyResponses, MyCalendarRetrieveData, MyCalendarRetrieveResponses, NotificationPreferencesMePartialUpdateData, NotificationPreferencesMePartialUpdateResponses, NotificationPreferencesMeRetrieveData, NotificationPreferencesMeRetrieveResponses, ProfilesListData, ProfilesListResponses, ProfilesMePartialUpdateData, ProfilesMePartialUpdateResponses, ProfilesMeRetrieveData, ProfilesMeRetrieveResponses, ProfilesRetrieveData, ProfilesRetrieveResponses, PublicBookingsListData, PublicBookingsListResponses, PublicBookingsRetrieveData, PublicBookingsRetrieveResponses, PublicItemsBookingHistoryRetrieveData, PublicItemsBookingHistoryRetrieveResponses, PublicItemsFacetsRetrieveData, PublicItemsFacetsRetrieveResponses, PublicItemsListData, PublicItemsListResponses, PublicItemsQuickRentCreateData, PublicItemsQuickRentCreateResponses, PublicItemsRetrieveData, PublicItemsRetrieveResponses, PushSubscriptionsStatusRetrieveData, PushSubscriptionsStatusRetrieveResponses, PushSubscriptionsSubscribeCreateData, PushSubscriptionsSubscribeCreateResponses, PushSubscriptionsTestCreateData, PushSubscriptionsTestCreateResponses, PushSubscriptionsUnsubscribeCreateData, PushSubscriptionsUnsubscribeCreateResponses, SchemaRetrieveData, SchemaRetrieveResponses, UsersListData, UsersListResponses, UsersMeRetrieveData, UsersMeRetrieveResponses, UsersPartialUpdateData, UsersPartialUpdateResponses, UsersRetrieveData, UsersRetrieveResponses, UsersUpdateData, UsersUpdateResponses, VersionRetrieveData, VersionRetrieveResponses } from './types.gen';
+import type { AuthTokenCreateData, AuthTokenCreateResponses, BookingsConfirmReceivedCreateData, BookingsConfirmReceivedCreateResponses, BookingsConfirmReturnedCreateData, BookingsConfirmReturnedCreateResponses, BookingsCreateData, BookingsCreateResponses, BookingsDestroyData, BookingsDestroyResponses, BookingsListData, BookingsListResponses, BookingsPartialUpdateData, BookingsPartialUpdateResponses, BookingsRetrieveData, BookingsRetrieveResponses, BookingsReturnCreateData, BookingsReturnCreateResponses, BookingsUpdateData, BookingsUpdateResponses, BooksCreateData, BooksCreateResponses, BooksDestroyData, BooksDestroyResponses, BooksIsbnUpdateUpdateData, BooksIsbnUpdateUpdateResponses, BooksListData, BooksListResponses, BooksPartialUpdateData, BooksPartialUpdateResponses, BooksRetrieveData, BooksRetrieveResponses, BooksUpdateData, BooksUpdateResponses, CollectionItemsCreateData, CollectionItemsCreateResponses, CollectionItemsDestroyData, CollectionItemsDestroyResponses, CollectionItemsListData, CollectionItemsListResponses, CollectionItemsPartialUpdateData, CollectionItemsPartialUpdateResponses, CollectionItemsRetrieveData, CollectionItemsRetrieveResponses, CollectionItemsUpdateData, CollectionItemsUpdateResponses, CollectionsAddItemCreateData, CollectionsAddItemCreateResponses, CollectionsBulkAddItemsCreateData, CollectionsBulkAddItemsCreateResponses, CollectionsBulkRemoveItemsCreateData, CollectionsBulkRemoveItemsCreateResponses, CollectionsCalendarLinkCreateData, CollectionsCalendarLinkCreateResponses, CollectionsCalendarLinkDestroyData, CollectionsCalendarLinkDestroyResponses, CollectionsCalendarLinkRetrieveData, CollectionsCalendarLinkRetrieveResponses, CollectionsCreateData, CollectionsCreateResponses, CollectionsDestroyData, CollectionsDestroyResponses, CollectionsForItemListData, CollectionsForItemListResponses, CollectionsHistoryListData, CollectionsHistoryListResponses, CollectionsListData, CollectionsListResponses, CollectionsManagePermissionsCreateData, CollectionsManagePermissionsCreateResponses, CollectionsMyCollectionsListData, CollectionsMyCollectionsListResponses, CollectionsPartialUpdateData, CollectionsPartialUpdateResponses, CollectionsPermissionsListData, CollectionsPermissionsListResponses, CollectionsRemoveItemCreateData, CollectionsRemoveItemCreateResponses, CollectionsRetrieveData, CollectionsRetrieveResponses, CollectionsUpdateData, CollectionsUpdateResponses, CommentsCreateData, CommentsCreateResponses, CommentsDestroyData, CommentsDestroyResponses, CommentsListData, CommentsListResponses, CommentsPartialUpdateData, CommentsPartialUpdateResponses, CommentsRetrieveData, CommentsRetrieveResponses, CommentsUpdateData, CommentsUpdateResponses, ConfigRetrieveData, ConfigRetrieveResponses, DemoActivityRetrieveData, DemoActivityRetrieveResponses, DemoBookingActionData, DemoBookingActionResponses, DemoCommentCreateData, DemoCommentCreateResponses, DemoIdentitySwitchData, DemoIdentitySwitchResponses, DemoImpactRetrieveData, DemoImpactRetrieveResponses, DemoItemApplyData, DemoItemApplyResponses, DemoItemCreateData, DemoItemCreateResponses, DemoItemDeleteData, DemoItemDeleteResponses, DemoItemRetrieveData, DemoItemRetrieveResponses, DemoItemsListData, DemoItemsListResponses, DemoResetCreateData, DemoResetCreateResponses, FavoritesCreateData, FavoritesCreateResponses, FavoritesDestroyData, FavoritesDestroyResponses, FavoritesItemIdsRetrieveData, FavoritesItemIdsRetrieveResponses, FavoritesListData, FavoritesListResponses, FederatedItemsRetrieveData, FederatedItemsRetrieveResponses, GroupsListData, GroupsListResponses, GroupsRetrieveData, GroupsRetrieveResponses, ImagesCreateData, ImagesCreateResponses, ImagesDestroyData, ImagesDestroyResponses, ImagesListData, ImagesListResponses, ImagesPartialUpdateData, ImagesPartialUpdateResponses, ImagesRetrieveData, ImagesRetrieveResponses, ImagesRotateUpdateData, ImagesRotateUpdateResponses, ImagesUpdateData, ImagesUpdateResponses, ItemsAiDescribeUpdateData, ItemsAiDescribeUpdateResponses, ItemsAiImageUpdateData, ItemsAiImageUpdateResponses, ItemsCalendarLinkCreateData, ItemsCalendarLinkCreateResponses, ItemsCalendarLinkDestroyData, ItemsCalendarLinkDestroyResponses, ItemsCalendarLinkRetrieveData, ItemsCalendarLinkRetrieveResponses, ItemsCoOwnersCreateData, ItemsCoOwnersCreateResponses, ItemsCoOwnersDestroyData, ItemsCoOwnersDestroyResponses, ItemsCoOwnersRetrieveData, ItemsCoOwnersRetrieveResponses, ItemsCreateData, ItemsCreateResponses, ItemsDestroyData, ItemsDestroyResponses, ItemsListData, ItemsListResponses, ItemsPartialUpdateData, ItemsPartialUpdateResponses, ItemsQuickRentPdfRetrieveData, ItemsQuickRentPdfRetrieveResponses, ItemsReorderImagesUpdateData, ItemsReorderImagesUpdateResponses, ItemsRetrieveData, ItemsRetrieveResponses, ItemsUpdateData, ItemsUpdateResponses, ItemsViewersCreateData, ItemsViewersCreateResponses, ItemsViewersDestroyData, ItemsViewersDestroyResponses, ItemsViewersRetrieveData, ItemsViewersRetrieveResponses, LocationsListData, LocationsListResponses, LocationsRetrieveData, LocationsRetrieveResponses, MessagesCreateData, MessagesCreateResponses, MessagesDestroyData, MessagesDestroyResponses, MessagesListData, MessagesListResponses, MessagesPartialUpdateData, MessagesPartialUpdateResponses, MessagesRetrieveData, MessagesRetrieveResponses, MessagesUpdateData, MessagesUpdateResponses, MyCalendarCreateData, MyCalendarCreateResponses, MyCalendarDestroyData, MyCalendarDestroyResponses, MyCalendarRetrieveData, MyCalendarRetrieveResponses, NotificationPreferencesMePartialUpdateData, NotificationPreferencesMePartialUpdateResponses, NotificationPreferencesMeRetrieveData, NotificationPreferencesMeRetrieveResponses, ProfilesListData, ProfilesListResponses, ProfilesMePartialUpdateData, ProfilesMePartialUpdateResponses, ProfilesMeRetrieveData, ProfilesMeRetrieveResponses, ProfilesRetrieveData, ProfilesRetrieveResponses, PublicBookingsListData, PublicBookingsListResponses, PublicBookingsRetrieveData, PublicBookingsRetrieveResponses, PublicItemsBookingHistoryRetrieveData, PublicItemsBookingHistoryRetrieveResponses, PublicItemsFacetsRetrieveData, PublicItemsFacetsRetrieveResponses, PublicItemsListData, PublicItemsListResponses, PublicItemsQuickRentCreateData, PublicItemsQuickRentCreateResponses, PublicItemsRetrieveData, PublicItemsRetrieveResponses, PushSubscriptionsStatusRetrieveData, PushSubscriptionsStatusRetrieveResponses, PushSubscriptionsSubscribeCreateData, PushSubscriptionsSubscribeCreateResponses, PushSubscriptionsTestCreateData, PushSubscriptionsTestCreateResponses, PushSubscriptionsUnsubscribeCreateData, PushSubscriptionsUnsubscribeCreateResponses, SchemaRetrieveData, SchemaRetrieveResponses, UsersListData, UsersListResponses, UsersMeRetrieveData, UsersMeRetrieveResponses, UsersPartialUpdateData, UsersPartialUpdateResponses, UsersRetrieveData, UsersRetrieveResponses, UsersUpdateData, UsersUpdateResponses, VersionRetrieveData, VersionRetrieveResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -130,28 +130,6 @@ export const bookingsPartialUpdate = <ThrowOnError extends boolean = true>(optio
 });
 
 /**
- * Return the item of a running open-ended rental, ending it now.
- *
- * Open-ended rentals (e.g. started by scanning an item's QR code) have no
- * end date, so instead of being cancelled they are ended here. The booker
- * and the item's owners/co-owners may return the item; the booking is
- * COMPLETED with ``time_to`` set to now and the item becomes available.
- */
-export const bookingsReturnCreate = <ThrowOnError extends boolean = true>(options: Options<BookingsReturnCreateData, ThrowOnError>): RequestResult<BookingsReturnCreateResponses, unknown, ThrowOnError> => (options.client ?? client).post<BookingsReturnCreateResponses, unknown, ThrowOnError>({
-    security: [
-        {
-            in: 'cookie',
-            name: 'sessionid',
-            type: 'apiKey'
-        },
-        { name: 'Authorization', type: 'apiKey' },
-        { name: 'X-Session-Token', type: 'apiKey' }
-    ],
-    url: '/api/bookings/{id}/return/',
-    ...options
-});
-
-/**
  * ViewSet for bookings with filtering and permissions.
  */
 export const bookingsUpdate = <ThrowOnError extends boolean = true>(options: Options<BookingsUpdateData, ThrowOnError>): RequestResult<BookingsUpdateResponses, unknown, ThrowOnError> => (options.client ?? client).put<BookingsUpdateResponses, unknown, ThrowOnError>({
@@ -210,6 +188,28 @@ export const bookingsConfirmReturnedCreate = <ThrowOnError extends boolean = tru
         { name: 'X-Session-Token', type: 'apiKey' }
     ],
     url: '/api/bookings/{id}/confirm_returned/',
+    ...options
+});
+
+/**
+ * Return the item of a running open-ended rental, ending it now.
+ *
+ * Open-ended rentals (e.g. started by scanning an item's QR code) have no
+ * end date, so instead of being cancelled they are ended here. The booker
+ * and the item's owners/co-owners may return the item; the booking is
+ * COMPLETED with ``time_to`` set to now and the item becomes available.
+ */
+export const bookingsReturnCreate = <ThrowOnError extends boolean = true>(options: Options<BookingsReturnCreateData, ThrowOnError>): RequestResult<BookingsReturnCreateResponses, unknown, ThrowOnError> => (options.client ?? client).post<BookingsReturnCreateResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/bookings/{id}/return/',
     ...options
 });
 
@@ -1053,6 +1053,175 @@ export const configRetrieve = <ThrowOnError extends boolean = true>(options?: Op
     ...options
 });
 
+export const demoActivityRetrieve = <ThrowOnError extends boolean = true>(options?: Options<DemoActivityRetrieveData, ThrowOnError>): RequestResult<DemoActivityRetrieveResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DemoActivityRetrieveResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/activity/',
+    ...options
+});
+
+export const demoBookingAction = <ThrowOnError extends boolean = true>(options: Options<DemoBookingActionData, ThrowOnError>): RequestResult<DemoBookingActionResponses, unknown, ThrowOnError> => (options.client ?? client).post<DemoBookingActionResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/activity/{booking_id}/{action}/',
+    ...options
+});
+
+export const demoCommentCreate = <ThrowOnError extends boolean = true>(options: Options<DemoCommentCreateData, ThrowOnError>): RequestResult<DemoCommentCreateResponses, unknown, ThrowOnError> => (options.client ?? client).post<DemoCommentCreateResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/comments/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Sign the local browser into one of the two seeded demo accounts.
+ */
+export const demoIdentitySwitch = <ThrowOnError extends boolean = true>(options: Options<DemoIdentitySwitchData, ThrowOnError>): RequestResult<DemoIdentitySwitchResponses, unknown, ThrowOnError> => (options.client ?? client).post<DemoIdentitySwitchResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/identity/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const demoImpactRetrieve = <ThrowOnError extends boolean = true>(options?: Options<DemoImpactRetrieveData, ThrowOnError>): RequestResult<DemoImpactRetrieveResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DemoImpactRetrieveResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/impact/',
+    ...options
+});
+
+export const demoItemsList = <ThrowOnError extends boolean = true>(options?: Options<DemoItemsListData, ThrowOnError>): RequestResult<DemoItemsListResponses, unknown, ThrowOnError> => (options?.client ?? client).get<DemoItemsListResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/items/',
+    ...options
+});
+
+export const demoItemCreate = <ThrowOnError extends boolean = true>(options: Options<DemoItemCreateData, ThrowOnError>): RequestResult<DemoItemCreateResponses, unknown, ThrowOnError> => (options.client ?? client).post<DemoItemCreateResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/items/',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const demoItemDelete = <ThrowOnError extends boolean = true>(options: Options<DemoItemDeleteData, ThrowOnError>): RequestResult<DemoItemDeleteResponses, unknown, ThrowOnError> => (options.client ?? client).delete<DemoItemDeleteResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/items/{item_id}/',
+    ...options
+});
+
+export const demoItemRetrieve = <ThrowOnError extends boolean = true>(options: Options<DemoItemRetrieveData, ThrowOnError>): RequestResult<DemoItemRetrieveResponses, unknown, ThrowOnError> => (options.client ?? client).get<DemoItemRetrieveResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/items/{item_id}/',
+    ...options
+});
+
+export const demoItemApply = <ThrowOnError extends boolean = true>(options: Options<DemoItemApplyData, ThrowOnError>): RequestResult<DemoItemApplyResponses, unknown, ThrowOnError> => (options.client ?? client).post<DemoItemApplyResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/items/{item_id}/apply/',
+    ...options
+});
+
+export const demoResetCreate = <ThrowOnError extends boolean = true>(options?: Options<DemoResetCreateData, ThrowOnError>): RequestResult<DemoResetCreateResponses, unknown, ThrowOnError> => (options?.client ?? client).post<DemoResetCreateResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/demo/reset/',
+    ...options
+});
+
 /**
  * The current user's favorite items, newest mark first.
  *
@@ -1593,7 +1762,9 @@ export const itemsCoOwnersCreate = <ThrowOnError extends boolean = true>(options
  * Download a printable PDF with the item's quick-rent QR code.
  *
  * Available to owners and co-owners of self-service (auto-approved)
- * rental items.
+ * rental items that allow open-ended rentals. The sheet is written in the
+ * request language, i.e. the UI language the frontend sends as
+ * ``Accept-Language``.
  */
 export const itemsQuickRentPdfRetrieve = <ThrowOnError extends boolean = true>(options: Options<ItemsQuickRentPdfRetrieveData, ThrowOnError>): RequestResult<ItemsQuickRentPdfRetrieveResponses, unknown, ThrowOnError> => (options.client ?? client).get<ItemsQuickRentPdfRetrieveResponses, unknown, ThrowOnError>({
     security: [
@@ -2179,27 +2350,6 @@ export const publicItemsList = <ThrowOnError extends boolean = true>(options?: O
 });
 
 /**
- * Rent the item right now, or return it if the user already has it.
- *
- * Called when a user scans the item's QR code. If someone else currently
- * has the item, nothing changes and the response names who has it.
- * Only self-service (auto-approved) rental items support this.
- */
-export const publicItemsQuickRentCreate = <ThrowOnError extends boolean = true>(options: Options<PublicItemsQuickRentCreateData, ThrowOnError>): RequestResult<PublicItemsQuickRentCreateResponses, unknown, ThrowOnError> => (options.client ?? client).post<PublicItemsQuickRentCreateResponses, unknown, ThrowOnError>({
-    security: [
-        {
-            in: 'cookie',
-            name: 'sessionid',
-            type: 'apiKey'
-        },
-        { name: 'Authorization', type: 'apiKey' },
-        { name: 'X-Session-Token', type: 'apiKey' }
-    ],
-    url: '/api/public-items/{id}/quick-rent/',
-    ...options
-});
-
-/**
  * ViewSet for retrieving published items.
  * This viewset is read-only and only returns items with a published status.
  *
@@ -2241,6 +2391,28 @@ export const publicItemsBookingHistoryRetrieve = <ThrowOnError extends boolean =
         { name: 'X-Session-Token', type: 'apiKey' }
     ],
     url: '/api/public-items/{id}/booking-history/',
+    ...options
+});
+
+/**
+ * Rent the item right now, or return it if the user already has it.
+ *
+ * Called when a user scans the item's QR code. If someone else currently
+ * has the item, nothing changes and the response names who has it.
+ * Only self-service (auto-approved) rental items that allow open-ended
+ * rentals support this.
+ */
+export const publicItemsQuickRentCreate = <ThrowOnError extends boolean = true>(options: Options<PublicItemsQuickRentCreateData, ThrowOnError>): RequestResult<PublicItemsQuickRentCreateResponses, unknown, ThrowOnError> => (options.client ?? client).post<PublicItemsQuickRentCreateResponses, unknown, ThrowOnError>({
+    security: [
+        {
+            in: 'cookie',
+            name: 'sessionid',
+            type: 'apiKey'
+        },
+        { name: 'Authorization', type: 'apiKey' },
+        { name: 'X-Session-Token', type: 'apiKey' }
+    ],
+    url: '/api/public-items/{id}/quick-rent/',
     ...options
 });
 

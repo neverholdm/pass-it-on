@@ -15,7 +15,8 @@ x-backend: &backend
     - ./backend/.env-docker.local
   environment:
     - GEMINI_API_KEY=${GEMINI_API_KEY:-not_set}
-    - FRONTEND_URL=http://localhost:8080
+    - PASS_IT_ON_DEMO_MODE=${PASS_IT_ON_DEMO_MODE:-true}
+    - FRONTEND_URL=http://localhost:18080
     # Browser push (VAPID) — `just manage generate_vapid_keys` prints a pair.
     # Push stays disabled while these are empty. See docs/pwa.md.
     - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY:-}
@@ -41,7 +42,7 @@ services:
     volumes:
       - ./frontend/src:/app/src:z
     ports:
-      - '127.0.0.1:8080:8080'
+      - '127.0.0.1:18080:8080'
 
   backend:
     <<: *backend
