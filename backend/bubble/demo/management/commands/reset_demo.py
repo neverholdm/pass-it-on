@@ -10,8 +10,8 @@ from bubble.demo.constants import DEMO_GROUP_NAME, DEMO_MARKER
 from bubble.items.models import Item, ItemStatus, SalesType, VisibilityType
 
 IDENTITIES = {
-    "pass-it-on-giver": ("Demo Giver", "giver@example.test"),
-    "pass-it-on-applicant": ("Demo Applicant", "applicant@example.test"),
+    "pass-it-on-giver": ("Item Giver", "giver@example.test"),
+    "pass-it-on-applicant": ("Item Requester", "applicant@example.test"),
 }
 
 

@@ -57,7 +57,7 @@ export const BrowsePage = () => {
         <Title order={2}>Browse free items</Title>
         <Text c="dimmed" mt={4}>Find something useful and ask the giver about it.</Text>
       </div>
-      {!user && <Alert color="blue">Choose Demo Giver or Demo Applicant above to browse the local sample items.</Alert>}
+      {!user && <Alert color="blue">Choose Item Giver or Item Requester above to browse the local sample items.</Alert>}
       {error && <Alert color="red" title="Could not load items">{error}</Alert>}
       <Card withBorder radius="lg" p="md">
         <form onSubmit={event => { event.preventDefault(); setActiveSearch(search.trim()); }}>

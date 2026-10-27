@@ -19,10 +19,10 @@ from bubble.demo.serializers import (
 )
 
 DEMO_IDENTITIES = {
-    "giver": {"username": "pass-it-on-giver", "display_name": "Demo Giver"},
+    "giver": {"username": "pass-it-on-giver", "display_name": "Item Giver"},
     "applicant": {
         "username": "pass-it-on-applicant",
-        "display_name": "Demo Applicant",
+        "display_name": "Item Requester",
     },
 }
 LOCAL_HOSTS = {"127.0.0.1", "localhost", "::1"}
@@ -37,6 +37,14 @@ def is_demo_user(user) -> bool:
         getattr(user, "is_authenticated", False)
         and user.groups.filter(name=DEMO_GROUP_NAME).exists()
     )
+
+
+def demo_display_name(user) -> str:
+    """Return the role label used for demo identities, independent of seed data."""
+    for identity in DEMO_IDENTITIES.values():
+        if user.username == identity["username"]:
+            return identity["display_name"]
+    return user.name or user.username
 
 
 def _ensure_demo_is_enabled() -> None:
@@ -87,7 +95,7 @@ def switch_identity(request):
             "user": {
                 "id": str(user.pk),
                 "username": user.username,
-                "display_name": user.name or identity["display_name"],
+            "display_name": identity["display_name"],
             },
         }
     )

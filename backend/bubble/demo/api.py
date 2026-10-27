@@ -23,7 +23,7 @@ from bubble.demo.exceptions import (
     DemoGiverOnly,
     DemoIdentityRequired,
 )
-from bubble.demo.identity import is_demo_user
+from bubble.demo.identity import demo_display_name, is_demo_user
 from bubble.demo.management.commands.reset_demo import reset_demo_data
 from bubble.demo.serializers import (
     DemoActivitySerializer,
@@ -72,7 +72,7 @@ def _item_payload(item, user):
         "category": item.category,
         "description": item.description,
         "status": status,
-        "owner": item.user.name or item.user.username,
+        "owner": demo_display_name(item.user),
         "is_free": item.sales_type == SalesType.DONATE and item.price is None,
         "can_apply": (item.status == ItemStatus.AVAILABLE and item.user_id != user.pk),
     }
@@ -168,7 +168,7 @@ class DemoItemDetailView(APIView):
                     {
                         "id": str(comment.pk),
                         "body": comment.body,
-                        "author": comment.user.name or comment.user.username,
+                        "author": demo_display_name(comment.user),
                         "created_at": comment.created_at,
                     }
                     for comment in comments
@@ -239,7 +239,7 @@ def create_comment(request):
         {
             "id": str(comment.pk),
             "body": comment.body,
-            "author": request.user.name or request.user.username,
+            "author": demo_display_name(request.user),
             "created_at": comment.created_at,
         },
         status=201,
@@ -250,7 +250,7 @@ def _booking_payload(booking, current_user):
     return {
         "id": str(booking.pk),
         "item": _item_payload(booking.item, current_user),
-        "applicant": booking.user.name or booking.user.username,
+        "applicant": demo_display_name(booking.user),
         "applicant_id": str(booking.user_id),
         "status": booking.get_status_display(),
         "status_code": booking.status,

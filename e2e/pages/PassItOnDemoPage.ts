@@ -4,6 +4,11 @@ import { BasePage } from './BasePage';
 
 export type DemoRole = 'Giver' | 'Applicant';
 
+const identityLabels: Record<DemoRole, string> = {
+  Giver: 'Item Giver',
+  Applicant: 'Item Requester',
+};
+
 export class PassItOnDemoPage extends BasePage {
   readonly path = '/demo/browse';
 
@@ -17,8 +22,9 @@ export class PassItOnDemoPage extends BasePage {
   }
 
   async switchTo(role: DemoRole): Promise<void> {
-    await this.page.getByRole('button', { name: `Demo ${role}`, exact: true }).click();
-    await expect(this.page.getByText(`Signed in as Demo ${role}`)).toBeVisible();
+    const label = identityLabels[role];
+    await this.page.getByRole('button', { name: label, exact: true }).click();
+    await expect(this.page.getByText(`Signed in as ${label}`)).toBeVisible();
   }
 
   async giveItem(name: string, category: string, description: string): Promise<void> {

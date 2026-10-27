@@ -8,8 +8,13 @@ import { useNavigate } from 'react-router-dom';
 type DemoIdentity = 'giver' | 'applicant';
 
 const labels: Record<DemoIdentity, string> = {
-  giver: 'Demo Giver',
-  applicant: 'Demo Applicant',
+  giver: 'Item Giver',
+  applicant: 'Item Requester',
+};
+
+const roleDescriptions: Record<DemoIdentity, string> = {
+  giver: 'Publish free items and review requests.',
+  applicant: 'Browse items, ask questions, and request items.',
 };
 
 export const DemoIdentitySwitcher = () => {
@@ -46,9 +51,10 @@ export const DemoIdentitySwitcher = () => {
       </Text>
       {!user && (
         <Text size="xs" c="dimmed">
-          These fictional accounts keep the hand-off flow on this demo instance.
+          Choose Item Giver to share an item, or Item Requester to browse and request one.
         </Text>
       )}
+      {current && <Text size="xs" c="dimmed">{roleDescriptions[current]}</Text>}
       {user && !current && (
         <Alert color="yellow" title="A different account is signed in">
           Sign out of that account before switching to a demo identity.

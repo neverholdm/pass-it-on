@@ -12,26 +12,17 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-route
 import { configureApiClient } from './config/apiClient';
 import Account from './pages/Account';
 import Auth from './pages/Auth';
-import Bookings from './pages/Bookings';
 import CalendarSettings from './pages/CalendarSettings';
-import Collections from './pages/Collections';
-import CollectionDetail from './pages/CollectionDetail';
-import CreateItem from './pages/CreateItem';
 import EditBook from './pages/EditBook';
 import EditItem from './pages/EditItem';
 import Favorites from './pages/Favorites';
-import Home from './pages/Home';
-import Browse from './pages/Browse';
 import ItemDetail from './pages/ItemDetail';
 import ItemBookingHistory from './pages/ItemBookingHistory';
-import MyItems from './pages/MyItems';
 import NotFound from './pages/NotFound';
 import NotificationSettings from './pages/NotificationSettings';
 import PersonalSettings from './pages/PersonalSettings';
 import QuickRent from './pages/QuickRent';
 import { AppUpdatePrompt } from './components/layout/AppUpdatePrompt';
-import { Header } from './components/layout/Header';
-import { MobileBottomNav } from './components/layout/MobileBottomNav';
 import { OfflineIndicator } from './components/layout/OfflineIndicator';
 import { ACCOUNT_PATH, BROWSE_PATH, FAVORITES_PATH } from './lib/routes';
 import { localStorageColorSchemeManager, MantineProvider } from '@mantine/core';
@@ -50,19 +41,10 @@ const colorSchemeManager = localStorageColorSchemeManager({ key: 'bubble-theme' 
 // Configure the API client once at startup
 configureApiClient();
 
-// Root route dispatcher. "/" is the start page for signed-in visitors on every
-// viewport; anonymous visitors and any deep link carrying catalogue params
-// belong on the canonical browse route (preserving the query string, which
-// keeps existing "/?search=…" links working).
-const RootRoute = () => {
-  const { session } = useAuth();
-  const location = useLocation();
-
-  if (session && !location.search) {
-    return <Home />;
-  }
-  return <Navigate to={{ pathname: BROWSE_PATH, search: location.search }} replace />;
-};
+// Make the Pass It On demo the app's entry point. Main Sharebubble navigation
+// URLs redirect to their demo equivalents; the original page files remain in
+// the repository so they can be restored if needed.
+const RootRoute = () => <Navigate to="/demo/browse" replace />;
 
 // Wraps routes that always require authentication, even when REQUIRE_LOGIN=false.
 const AuthRequired = ({ children }: { children: React.ReactNode }) => {
@@ -90,15 +72,22 @@ const ProtectedRoutes = () => {
 
   // REQUIRE_LOGIN=true (default): gate everything behind login
   const isDemoRoute = location.pathname.startsWith('/demo');
-  if (requireLogin && !session && !isDemoRoute) {
+  const isDemoEntry =
+    location.pathname === '/' ||
+    isDemoRoute ||
+    location.pathname === BROWSE_PATH ||
+    location.pathname === '/create-item' ||
+    location.pathname === '/my-items' ||
+    location.pathname.startsWith('/bookings') ||
+    location.pathname.startsWith('/collections');
+  if (requireLogin && !session && !isDemoEntry) {
     return <Auth />;
   }
 
   // REQUIRE_LOGIN=false or user is authenticated: render the app.
   // User-specific routes are individually guarded by <AuthRequired>.
   return (
-    <div className={`min-h-screen bg-background ${session ? 'pb-16 md:pb-0' : ''}`}>
-      <Header />
+    <div className="min-h-screen bg-background">
       <Routes>
         <Route path="/demo" element={<DemoLayout />}>
           <Route index element={<Navigate to="browse" replace />} />
@@ -109,7 +98,7 @@ const ProtectedRoutes = () => {
           <Route path="impact" element={<ImpactPage />} />
         </Route>
         <Route path="/" element={<RootRoute />} />
-        <Route path={BROWSE_PATH} element={<Browse />} />
+        <Route path={BROWSE_PATH} element={<Navigate to="/demo/browse" replace />} />
         <Route path="/item/:itemUuid" element={<ItemDetail />} />
         <Route path="/item/:itemUuid/bookings" element={<ItemBookingHistory />} />
         <Route
@@ -130,11 +119,7 @@ const ProtectedRoutes = () => {
         />
         <Route
           path="/create-item"
-          element={
-            <AuthRequired>
-              <CreateItem />
-            </AuthRequired>
-          }
+          element={<Navigate to="/demo/give" replace />}
         />
         <Route
           path="/edit-item/:itemUuid"
@@ -162,11 +147,7 @@ const ProtectedRoutes = () => {
         />
         <Route
           path="/my-items"
-          element={
-            <AuthRequired>
-              <MyItems />
-            </AuthRequired>
-          }
+          element={<Navigate to="/demo/activity" replace />}
         />
         <Route
           path="/profile"
@@ -194,32 +175,13 @@ const ProtectedRoutes = () => {
         />
         <Route
           path="/bookings/:bookingId?"
-          element={
-            <AuthRequired>
-              <Bookings />
-            </AuthRequired>
-          }
+          element={<Navigate to="/demo/activity" replace />}
         />
-        <Route
-          path="/collections"
-          element={
-            <AuthRequired>
-              <Collections />
-            </AuthRequired>
-          }
-        />
-        <Route
-          path="/collections/:collectionId"
-          element={
-            <AuthRequired>
-              <CollectionDetail />
-            </AuthRequired>
-          }
-        />
+        <Route path="/collections" element={<Navigate to="/demo/browse" replace />} />
+        <Route path="/collections/:collectionId" element={<Navigate to="/demo/browse" replace />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <MobileBottomNav />
     </div>
   );
 };

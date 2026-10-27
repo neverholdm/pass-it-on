@@ -14,13 +14,13 @@ class DemoIdentitySwitchTests(TestCase):
             username="pass-it-on-giver",
             email="giver@example.test",
             password="temporary-test-password",
-            name="Demo Giver",
+            name="Item Giver",
         )
         self.applicant = user_model.objects.create_user(
             username="pass-it-on-applicant",
             email="applicant@example.test",
             password="temporary-test-password",
-            name="Demo Applicant",
+            name="Item Requester",
         )
         self.giver.groups.add(self.demo_group)
         self.applicant.groups.add(self.demo_group)

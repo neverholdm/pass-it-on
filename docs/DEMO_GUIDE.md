@@ -27,10 +27,10 @@ Do not use `docker compose down -v` if you want to keep the local database.
 
 ## Walk through a hand-off
 
-1. Select **Demo Giver**, open **Give an item**, and publish a fictional free item.
-2. Select **Demo Applicant**, search for the item, open its details, leave a public message, and apply.
-3. Select **Demo Giver**, open **My activity**, and approve the application.
-4. Select **Demo Applicant**, open **My activity**, and confirm receipt.
+1. Select **Item Giver**, open **Give an item**, and publish a fictional free item.
+2. Select **Item Requester**, search for the item, open its details, leave a public message, and apply.
+3. Select **Item Giver**, open **My activity**, and approve the application.
+4. Select **Item Requester**, open **My activity**, and confirm receipt.
 5. Open **Impact** to see the completed hand-off count. The page labels these as simulated demo data.
 
 The browser session and saved records survive page navigation and refresh. The sample includes an available vase, an available lamp with a pending request, and a completed side-table hand-off.

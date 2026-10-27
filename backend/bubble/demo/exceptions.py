@@ -10,11 +10,11 @@ class DemoActionDenied(PermissionDenied):
 
 
 class DemoGiverOnly(PermissionDenied):
-    default_detail = "Only the Demo Giver can perform this action."
+    default_detail = "Only the Item Giver can perform this action."
 
 
 class DemoApplicantOnly(PermissionDenied):
-    default_detail = "Only the Demo Applicant can perform this action."
+    default_detail = "Only the Item Requester can perform this action."
 
 
 class DemoLocalOnly(PermissionDenied):

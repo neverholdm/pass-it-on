@@ -97,7 +97,7 @@ export const ItemDetailsPage = () => {
               <Button loading={submitting} onClick={apply}>Apply for this item</Button>
             )}
             {user?.username === 'pass-it-on-giver' && item.can_apply && (
-              <Alert color="gray">You are the giver. Switch to Demo Applicant to request this item.</Alert>
+              <Alert color="gray">You are the Item Giver. Switch to Item Requester to request this item.</Alert>
             )}
             {!item.can_apply && <Alert color="gray">This item is not accepting new applications.</Alert>}
           </Stack>
