@@ -275,7 +275,27 @@ const ItemCardComponent = ({
             );
           }
 
-          // sell / donate: open booking dialog
+          // Free / donate items: take the visitor straight to the item page so
+          // they can read the details first. Requesting a free item must never
+          // ask for a purchase offer, so no dialog is opened from the card.
+          if (salesType === 'donate') {
+            return (
+              <div className="flex flex-1 gap-2">
+                <Button
+                  size="sm"
+                  fullWidth
+                  onClick={e => {
+                    e.stopPropagation();
+                    navigate(`/item/${id}`);
+                  }}
+                >
+                  {getActionLabel(salesType)}
+                </Button>
+              </div>
+            );
+          }
+
+          // sell: open booking dialog
           return (
             <Tooltip
               label={!user ? t('auth.loginRequired') : t('item.cannotMessageSelf')}

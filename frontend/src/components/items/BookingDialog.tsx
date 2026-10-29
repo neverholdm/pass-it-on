@@ -78,6 +78,8 @@ export const BookingDialog = ({
   const navigate = useNavigate();
   const [internalOpen, setInternalOpen] = useState(false);
   const isRental = salesType === 'rent' || salesType === 'borrow';
+  // Donated (free) items are requested, not bought: there is no price to offer.
+  const isDonate = salesType === 'donate';
   const isControlled =
     typeof controlledOpen !== 'undefined' && typeof onControlledOpenChange === 'function';
   const dialogOpen = isControlled ? controlledOpen! : internalOpen;
@@ -172,7 +174,7 @@ export const BookingDialog = ({
     try {
       booking = await createBookingMutation.mutateAsync({
         item: itemUuid,
-        offer: offerPrice === '' ? null : offerPrice,
+        offer: isDonate || offerPrice === '' ? null : offerPrice,
         time_from: timeFrom === '' ? null : timeFrom,
         time_to: timeTo === '' ? null : timeTo,
         status: 1, // Pending status
@@ -203,13 +205,24 @@ export const BookingDialog = ({
         disabled={createBookingMutation.isPending || disabled}
         onClick={() => setDialogOpen(true)}
       >
-        {triggerLabel ?? (isRental ? t('booking.bookNow') : t('itemDetail.buyNow'))}
+        {triggerLabel ??
+          (isRental
+            ? t('booking.bookNow')
+            : isDonate
+              ? t('itemDetail.requestDonate')
+              : t('itemDetail.buyNow'))}
       </Button>
 
       <Modal
         opened={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        title={isRental ? t('booking.bookNow') : t('itemDetail.buyNow')}
+        title={
+          isRental
+            ? t('booking.bookNow')
+            : isDonate
+              ? t('itemDetail.requestDonate')
+              : t('itemDetail.buyNow')
+        }
       >
         <form onSubmit={handleSubmit}>
           <Text size="sm" c="dimmed">
@@ -265,35 +278,37 @@ export const BookingDialog = ({
               </>
             )}
 
-            {/* Calculated Total Price (editable) */}
-            <div className="space-y-2">
-              <Input.Label htmlFor="offer">
-                {isRental ? t('booking.totalPrice') : t('booking.purchaseOffer')} *
-              </Input.Label>
-              {isRental &&
-                timeFrom &&
-                timeTo &&
-                (() => {
-                  const start = new Date(timeFrom);
-                  const end = new Date(timeTo);
-                  const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
-                  if (hours > 0) {
-                    return (
-                      <Text size="sm" c="dimmed">
-                        {hours} {hours === 1 ? t('time.hour') : t('time.hours')}
-                      </Text>
-                    );
-                  }
-                  return null;
-                })()}
-              <NumberInput
-                id="offer"
-                step={0.01}
-                placeholder={t('booking.enterYourOffer')}
-                value={offerPrice}
-                onChange={value => setOfferPrice(value === '' ? '' : String(value))}
-              />
-            </div>
+            {/* Calculated Total Price (editable) — free items have nothing to offer */}
+            {!isDonate && (
+              <div className="space-y-2">
+                <Input.Label htmlFor="offer">
+                  {isRental ? t('booking.totalPrice') : t('booking.purchaseOffer')} *
+                </Input.Label>
+                {isRental &&
+                  timeFrom &&
+                  timeTo &&
+                  (() => {
+                    const start = new Date(timeFrom);
+                    const end = new Date(timeTo);
+                    const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+                    if (hours > 0) {
+                      return (
+                        <Text size="sm" c="dimmed">
+                          {hours} {hours === 1 ? t('time.hour') : t('time.hours')}
+                        </Text>
+                      );
+                    }
+                    return null;
+                  })()}
+                <NumberInput
+                  id="offer"
+                  step={0.01}
+                  placeholder={t('booking.enterYourOffer')}
+                  value={offerPrice}
+                  onChange={value => setOfferPrice(value === '' ? '' : String(value))}
+                />
+              </div>
+            )}
           </div>
 
           <Group justify="flex-end" mt="md">
