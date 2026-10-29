@@ -37,6 +37,7 @@ import { ACCOUNT_PATH, BROWSE_PATH, FAVORITES_PATH } from './lib/routes';
 import { localStorageColorSchemeManager, MantineProvider } from '@mantine/core';
 import { mantineTheme } from './theme/mantine';
 import { DemoLayout } from './components/demo/DemoLayout';
+import { DemoRouteGuard } from './components/demo/DemoRouteGuard';
 import BrowsePage from './pages/BrowsePage';
 import GiveItemPage from './pages/GiveItemPage';
 import ItemDetailsPage from './pages/ItemDetailsPage';
@@ -132,7 +133,9 @@ const ProtectedRoutes = () => {
           path="/create-item"
           element={
             <AuthRequired>
-              <CreateItem />
+              <DemoRouteGuard>
+                <CreateItem />
+              </DemoRouteGuard>
             </AuthRequired>
           }
         />
@@ -164,7 +167,9 @@ const ProtectedRoutes = () => {
           path="/my-items"
           element={
             <AuthRequired>
-              <MyItems />
+              <DemoRouteGuard>
+                <MyItems />
+              </DemoRouteGuard>
             </AuthRequired>
           }
         />
@@ -196,7 +201,9 @@ const ProtectedRoutes = () => {
           path="/bookings/:bookingId?"
           element={
             <AuthRequired>
-              <Bookings />
+              <DemoRouteGuard>
+                <Bookings />
+              </DemoRouteGuard>
             </AuthRequired>
           }
         />
@@ -204,7 +211,9 @@ const ProtectedRoutes = () => {
           path="/collections"
           element={
             <AuthRequired>
-              <Collections />
+              <DemoRouteGuard>
+                <Collections />
+              </DemoRouteGuard>
             </AuthRequired>
           }
         />

@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/hooks/useAuth';
 import { useUnreadMessages } from '@/hooks/useMessages';
+import { useProfile } from '@/hooks/useProfile';
 import { ACCOUNT_PATH, BROWSE_PATH } from '@/lib/routes';
 import { Indicator, Paper, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
 import { CalendarCheck, Home, Plus, Search, User } from 'lucide-react';
@@ -28,6 +29,10 @@ export const MobileBottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { data: unreadMessages } = useUnreadMessages();
+  const { data: profile } = useProfile();
+  // Demo identities have no model permissions in the regular app; keep their
+  // bottom bar to the destinations that actually work for them.
+  const isDemoUser = profile?.is_demo === true;
 
   // The bar's destinations are user-specific; hide it for anonymous visitors.
   if (!user || location.pathname.startsWith('/demo')) return null;
@@ -47,19 +52,23 @@ export const MobileBottomNav = () => {
       to: BROWSE_PATH,
       isActive: pathname => pathname === BROWSE_PATH,
     },
-    {
-      key: 'nav.add',
-      icon: Plus,
-      to: '/create-item',
-      isActive: pathname => pathname.startsWith('/create-item'),
-    },
-    {
-      key: 'nav.bookings',
-      icon: CalendarCheck,
-      to: '/bookings',
-      isActive: pathname => pathname.startsWith('/bookings'),
-      badge: unreadCount,
-    },
+    ...(isDemoUser
+      ? []
+      : [
+          {
+            key: 'nav.add',
+            icon: Plus,
+            to: '/create-item',
+            isActive: (pathname: string) => pathname.startsWith('/create-item'),
+          },
+          {
+            key: 'nav.bookings',
+            icon: CalendarCheck,
+            to: '/bookings',
+            isActive: (pathname: string) => pathname.startsWith('/bookings'),
+            badge: unreadCount,
+          },
+        ]),
     {
       key: 'nav.profile',
       icon: User,

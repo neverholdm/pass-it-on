@@ -152,6 +152,11 @@ export const Header = () => {
   const { data: profile } = useProfile();
   const { canInstall, promptInstall } = useInstallPrompt();
 
+  // Demo identities are real accounts in the "Pass It On Demo" group, which has
+  // no model permissions: every regular-app write ends in a 403. Hide those
+  // entry points instead of letting people walk into the error.
+  const isDemoUser = profile?.is_demo === true;
+
   const { t } = useLanguage();
 
   const unreadCount = unreadMessages?.count || 0;
@@ -244,38 +249,44 @@ export const Header = () => {
               active={location.pathname === BROWSE_PATH}
             />
 
-            {/* My Items */}
-            <HeaderNavButton
-              icon={Library}
-              label={t('header.items')}
-              onClick={() => navigate('/my-items')}
-              active={location.pathname.startsWith('/my-items')}
-            />
+            {/* The demo identities only get the demo sandbox; the rest of the
+                app's destinations require the Default group's permissions. */}
+            {!isDemoUser && (
+              <>
+                {/* My Items */}
+                <HeaderNavButton
+                  icon={Library}
+                  label={t('header.items')}
+                  onClick={() => navigate('/my-items')}
+                  active={location.pathname.startsWith('/my-items')}
+                />
 
-            {/* Bookings — also the home of booking conversations and their
-                unread-message notifications, hence the badge. */}
-            <HeaderNavButton
-              icon={CalendarCheck}
-              label={t('header.bookings')}
-              onClick={() => navigate('/bookings')}
-              active={location.pathname.startsWith('/bookings')}
-              badge={unreadCount}
-            />
+                {/* Bookings — also the home of booking conversations and their
+                    unread-message notifications, hence the badge. */}
+                <HeaderNavButton
+                  icon={CalendarCheck}
+                  label={t('header.bookings')}
+                  onClick={() => navigate('/bookings')}
+                  active={location.pathname.startsWith('/bookings')}
+                  badge={unreadCount}
+                />
 
-            {/* Collections */}
-            <HeaderNavButton
-              icon={BookMarked}
-              label={t('collections.title')}
-              onClick={() => navigate('/collections')}
-              active={location.pathname.startsWith('/collections')}
-            />
+                {/* Collections */}
+                <HeaderNavButton
+                  icon={BookMarked}
+                  label={t('collections.title')}
+                  onClick={() => navigate('/collections')}
+                  active={location.pathname.startsWith('/collections')}
+                />
 
-            {/* Add Item */}
-            <HeaderShareButton
-              label={t('header.shareItem')}
-              onClick={() => navigate('/create-item')}
-              active={location.pathname.startsWith('/create-item')}
-            />
+                {/* Add Item */}
+                <HeaderShareButton
+                  label={t('header.shareItem')}
+                  onClick={() => navigate('/create-item')}
+                  active={location.pathname.startsWith('/create-item')}
+                />
+              </>
+            )}
 
             {/* Profile Dropdown */}
             <Menu position="bottom-end" shadow="md" width={224}>
